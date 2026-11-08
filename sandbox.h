@@ -12,6 +12,7 @@
 #include <sys/mount.h>
 #include <sys/prctl.h>
 #include <seccomp.h>
+#include <sched.h>
 
 /* Global constants */
 #define CGROUP_ROOT "/sys/fs/cgroup"
