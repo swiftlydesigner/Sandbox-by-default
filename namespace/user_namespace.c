@@ -1,22 +1,44 @@
 #include "../sandbox.h"
 
-int setup_user_namespace(void) {
-    FILE *f = fopen("/proc/self/uid_map", "w");
-
+static int write_file(const char *path, const char *text) {
+    FILE *f = fopen(path, "w");
+    
     if (!f) {
-        puts("failed to open uid_map");
+        fprintf(stderr, "open %s: %s\n", path, strerror(errno));
         return kERROR;
     }
 
-    fprintf(f, "0 %d 1\n", getuid());
-    fclose(f);
+    if (fputs(text, f) == EOF || fclose(f) != 0) {
+        fprintf(stderr, "write %s: %s\n", path, strerror(errno));
+        return kERROR;
+    }
 
-    f = fopen("/proc/self/setgroups", "w");
+    return kOK;
+}
 
-    if (f) {
-        puts("failed to open setgrups");
-        fprintf(f, "deny\n");
-        fclose(f);
+int setup_user_namespace(void) {
+    char map[64];
+    uid_t uid = getuid();
+    gid_t gid = getgid();
+
+    if (unshare(CLONE_NEWUSER) == -1) {
+        perror("unshare(CLONE_NEWUSER)");
+        return kERROR;
+    }
+
+    if (access("/proc/self/setgroups", F_OK) == 0 &&
+        write_file("/proc/self/setgroups", "deny\n") == -1) {
+        return kERROR;
+    }
+
+    snprintf(map, sizeof(map), "0 %d 1\n", uid);
+    if (write_file("/proc/self/uid_map", map) == -1) {
+        return kERROR;
+    }
+
+    snprintf(map, sizeof(map), "0 %d 1\n", gid);
+    if (write_file("/proc/self/gid_map", map) == -1) {
+        return kERROR;
     }
 
     return kOK;
