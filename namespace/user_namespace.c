@@ -21,28 +21,28 @@ int setup_user_namespace(void) {
     uid_t uid = getuid();
     gid_t gid = getgid();
 
-    if (access("/proc/self/setgroups", F_OK) == 0) {
-        if (write_file("/proc/self/setgroups", "deny\n") == -1) {
-            perror("setgroups");
-            exit(1);
-        }
-    }
-
     if (unshare(CLONE_NEWUSER) == -1) {
         perror("unshare(CLONE_NEWUSER)");
-        return kERROR;
+        return rERROR;
+    }
+
+    if (access("/proc/self/setgroups", F_OK) == 0) {
+        if (write_file("/proc/self/setgroups", "deny\n") == -1) {
+            perror("write setgroups");
+            return kERROR;
+        }
     }
 
     snprintf(map, sizeof(map), "0 %d 1\n", getuid());
     if (write_file("/proc/self/uid_map", map) == -1) {
-        perror("uid_map");
-        exit(1);
+        perror("write uid_map");
+        return kERROR;
     }
 
     snprintf(map, sizeof(map), "0 %d 1\n", getgid());
     if (write_file("/proc/self/gid_map", map) == -1) {
-        perror("gid_map");
-        exit(1);
+        perror("write gid_map");
+        return kERROR;
     }
 
     return kOK;
