@@ -74,6 +74,7 @@ int main(int argc, char *argv[]) {
     char path[256];
     snprintf(path, sizeof(path), "%s/%s", CGROUP_ROOT, CGROUP_NAME);
     rmdir(path);
+    
     return kOK;
 }
 

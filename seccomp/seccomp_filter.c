@@ -4,7 +4,7 @@ int install_seccomp(void) {
 
     scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_KILL);
     if (!ctx) {
-        return -1;
+        return kERROR;
     }
 
     // Allow list - kill violating process
