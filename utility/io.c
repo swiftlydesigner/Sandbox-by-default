@@ -1,4 +1,4 @@
-#include "sandbox.h"
+#include "../sandbox.h"
 
 void errExit(const char* msg) {
 	perror(msg);
