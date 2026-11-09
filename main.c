@@ -1,0 +1,80 @@
+#include "sandbox.h"
+
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s /path/to/untrusted [args…]\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    // Unshare namesapces
+    if (unshare(CLONE_NEWUSER | CLONE_NEWNS | CLONE_NEWPID |
+                CLONE_NEWNET | CLONE_NEWUTS) == -1) {
+        errExit("unshare");
+    }
+
+
+    // Configure
+    if (setup_user_namespace() != kOK) {
+        errExit("user ns");
+    }
+
+    if (setup_mount_namespace() != kOK) {
+        errExit("mount ns");
+    }
+
+    if (setup_net_namespace() != kOK) {
+        errExit("net ns");
+    }
+
+    if (cgroup_create() != kOK) {
+        errExit("cgroup create");
+    }
+
+    if (cgroup_apply_limits() != kOK) {
+        errExit("cgroup limits");
+    }
+
+    if (install_seccomp() != kOK) {
+        errExit("seccomp");
+    }
+
+    // Harden rules
+    block_fs_escape(); // Harden mount_ns
+    block_net_traffic(); // Harden net_ns
+    block_mem_snoop(); // Harden seccomp with memory snooping
+    block_res_exhaust(); // Harden resource exhaustion rules (if needed)
+    block_priv_syscalls(); // Harden seccomp with priv sys calls
+
+    // Fork to get PID 1 for child
+    pid_t pid = fork();
+    if (pid == -1) {
+        errExit("fork");
+    }
+
+    if (pid == 0) {
+        /* child – exec the untrusted binary */
+        execv(argv[1], &argv[1]);
+        errExit("execv");
+    }
+
+    /* parent – wait for child */
+    int st;
+    if (waitpid(pid, &st, 0) == -1) {
+        errExit("waitpid");
+    }
+
+    if (WIFSIGNALED(st)) {
+        fprintf(stderr, "Sandboxed program killed by signal %d\n",
+                WTERMSIG(st));
+    } else if (WIFEXITED(st)) {
+        printf("Sandboxed program exited with status %d\n",
+               WEXITSTATUS(st));
+    }
+
+    // rm cgroup
+    char path[256];
+    snprintf(path, sizeof(path), "%s/%s", CGROUP_ROOT, CGROUP_NAME);
+    rmdir(path);
+    return kOK;
+}
+
