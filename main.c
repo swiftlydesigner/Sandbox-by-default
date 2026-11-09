@@ -12,7 +12,6 @@ int main(int argc, char *argv[]) {
         errExit("unshare");
     }
 
-
     // Configure
     if (setup_user_namespace() != kOK) {
         errExit("user ns");

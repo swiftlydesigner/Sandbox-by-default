@@ -4,4 +4,3 @@ int setup_pid_namespace(void) {
     // Nothing required
     return kOK;
 }
-

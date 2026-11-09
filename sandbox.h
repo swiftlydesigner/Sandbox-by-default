@@ -1,4 +1,3 @@
-/* sandbox.h – common types & prototypes */
 #ifndef SANDBOX_H
 #define SANDBOX_H
 
@@ -14,9 +13,10 @@
 #include <seccomp.h>
 #include <sched.h>
 
-/* Global constants */
+
 #define CGROUP_ROOT "/sys/fs/cgroup"
 #define CGROUP_NAME "sandbox_demo"
+
 #define kOK 0
 #define kERROR -1
 
@@ -35,6 +35,9 @@ int block_net_traffic(void); /* net‑ns creation */
 int block_mem_snoop(void); /* seccomp rule add */
 int block_res_exhaust(void); /* cgroup limits */
 int block_priv_syscalls(void); /* seccomp rule add */
+
+
+void 
 
 #endif /* SANDBOX_H */
 

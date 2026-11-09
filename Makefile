@@ -8,7 +8,7 @@ SRC = main.c \
 	  block/network_block.c       namespace/pid_namespace.c \
 	  block/priv_syscall.c        namespace/user_namespace.c \
 	  block/resource_exhaust.c    seccomp/seccomp_filter.c \
-	  cgroup/cgroup.c
+	  cgroup/cgroup.c utility/io.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -13,4 +13,3 @@ int block_mem_snoop(void) {
 
     return seccomp_load(ctx) ? -1 : (seccomp_release(ctx), 0);
 }
-

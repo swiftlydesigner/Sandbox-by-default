@@ -19,4 +19,3 @@ int setup_user_namespace(void) {
 
     return kOK;
 }
-

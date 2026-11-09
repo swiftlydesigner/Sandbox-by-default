@@ -23,4 +23,3 @@ int setup_mount_namespace(void) {
 
     return kOK;
 }
-
