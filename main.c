@@ -49,10 +49,10 @@ int main(int argc, char *argv[]) {
     }
 
     // Harden rules
-    block_fs_escape(); // Harden mount_ns
-    block_net_traffic(); // Harden net_ns
+    block_fs_escape(); // Harden mount_ns [unused]
+    block_net_traffic(); // Harden net_ns [unused]
     block_mem_snoop(); // Harden seccomp with memory snooping
-    block_res_exhaust(); // Harden resource exhaustion rules (if needed)
+    block_res_exhaust(); // Harden resource exhaustion rules [unused]
     block_priv_syscalls(); // Harden seccomp with priv sys calls
 
     // Fork to get PID 1 for child
