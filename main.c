@@ -1,6 +1,17 @@
 #include "sandbox.h"
 
 int main(int argc, char *argv[]) {
+
+    FILE *f = fopen("/proc/self/status","r");
+    char line[256];
+    while (fgets(line,sizeof(line),f)) {
+        if (strncmp(line,"CapEff:",7)==0) {
+            printf("%s",line);
+            break;
+        }
+    }
+    fclose(f);
+
     if (argc < 2) {
         fprintf(stderr, "Usage: %s /path/to/untrusted [args…]\n", argv[0]);
         exit(EXIT_FAILURE);
