@@ -2,7 +2,7 @@
 
 static int write_file(const char *path, const char *text) {
     FILE *f = fopen(path, "w");
-    
+
     if (!f) {
         fprintf(stderr, "open %s: %s\n", path, strerror(errno));
         return kERROR;
@@ -26,19 +26,24 @@ int setup_user_namespace(void) {
         return kERROR;
     }
 
-    if (access("/proc/self/setgroups", F_OK) == 0 &&
-        write_file("/proc/self/setgroups", "deny\n") == -1) {
-        return kERROR;
+    if (access("/proc/self/setgroups", F_OK) == 0) {
+        if (write_file("/proc/self/setgroups", "deny\n") == -1) {
+            perror("setgroups");
+            exit(1);
+        }
     }
 
-    snprintf(map, sizeof(map), "0 %d 1\n", uid);
+    char map[256];
+    snprintf(map, sizeof(map), "0 %d 1\n", getuid());
     if (write_file("/proc/self/uid_map", map) == -1) {
-        return kERROR;
+        perror("uid_map");
+        exit(1);
     }
 
-    snprintf(map, sizeof(map), "0 %d 1\n", gid);
+    snprintf(map, sizeof(map), "0 %d 1\n", getgid());
     if (write_file("/proc/self/gid_map", map) == -1) {
-        return kERROR;
+        perror("gid_map");
+        exit(1);
     }
 
     return kOK;
