@@ -18,10 +18,10 @@ int main(int argc, char *argv[]) {
     }
 
     // Unshare namesapces
-    if (unshare(CLONE_NEWUSER | CLONE_NEWNS | CLONE_NEWPID |
-                CLONE_NEWNET | CLONE_NEWUTS) == -1) {
-        errExit("unshare");
-    }
+//    if (unshare(CLONE_NEWUSER | CLONE_NEWNS | CLONE_NEWPID |
+//                CLONE_NEWNET | CLONE_NEWUTS) == -1) {
+//        errExit("unshare");
+//    }
 
     // Configure
     if (setup_user_namespace() != kOK) {
