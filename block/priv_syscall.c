@@ -4,7 +4,7 @@ int block_priv_syscalls(void) {
     scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_ALLOW);
     if (!ctx) return -1;
 
-    seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS_mount, 0);
+    seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(mount), 0);
     seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(umount2), 0);
     seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(pivot_root), 0);
     seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(mknod), 0);
@@ -51,5 +51,5 @@ int block_priv_syscalls(void) {
 
     seccomp_release(ctx);
 
-    return kOK
+    return kOK;
 }
