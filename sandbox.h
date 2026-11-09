@@ -37,7 +37,7 @@ int block_res_exhaust(void); /* cgroup limits */
 int block_priv_syscalls(void); /* seccomp rule add */
 
 
-void 
+void errExit(const char*);
 
 #endif /* SANDBOX_H */
 
