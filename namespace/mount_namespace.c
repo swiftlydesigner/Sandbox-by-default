@@ -18,7 +18,7 @@ int setup_mount_namespace(void) {
     /* private /tmp (tmpfs) */
     if (mount("tmpfs", "/tmp", "tmpfs", 0,
               "size=64M,mode=1777") == -1) {
-        return kERROR
+        return kERROR;
     }
 
     return kOK;
