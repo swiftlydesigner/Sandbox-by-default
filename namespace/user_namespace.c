@@ -33,15 +33,15 @@ int setup_user_namespace(void) {
         }
     }
 
-    char map[256];
-    snprintf(map, sizeof(map), "0 %d 1\n", getuid());
-    if (write_file("/proc/self/uid_map", map) == -1) {
+    char str[256];
+    snprintf(str, sizeof(str), "0 %d 1\n", getuid());
+    if (write_file("/proc/self/uid_map", str) == -1) {
         perror("uid_map");
         exit(1);
     }
 
-    snprintf(map, sizeof(map), "0 %d 1\n", getgid());
-    if (write_file("/proc/self/gid_map", map) == -1) {
+    snprintf(str, sizeof(str), "0 %d 1\n", getgid());
+    if (write_file("/proc/self/gid_map", str) == -1) {
         perror("gid_map");
         exit(1);
     }
