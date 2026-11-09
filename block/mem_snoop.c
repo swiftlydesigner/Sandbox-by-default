@@ -7,9 +7,15 @@ int block_mem_snoop(void) {
         return kERROR;
     }
 
-    seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS_ptrace, 0);
-    seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS_process_vm_readv, 0);
-    seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS_process_vm_writev, 0);
+    seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(ptrace), 0);
+    seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(process_vm_readv), 0);
+    seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(process_vm_writev), 0);
 
-    return seccomp_load(ctx) ? -1 : (seccomp_release(ctx), 0);
+    if (seccomp_load(ctx)) {
+        return kERROR;
+    }
+
+    seccomp_release(ctx);
+
+    return kOK;
 }
