@@ -23,7 +23,7 @@ int setup_user_namespace(void) {
 
     if (unshare(CLONE_NEWUSER) == -1) {
         perror("unshare(CLONE_NEWUSER)");
-        return rERROR;
+        return kERROR;
     }
 
     if (access("/proc/self/setgroups", F_OK) == 0) {
