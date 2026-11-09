@@ -24,17 +24,17 @@ int main(int argc, char *argv[]) {
 //    }
 
     // Configure
-    if (setup_user_namespace() != kOK) {
-        errExit("user ns");
-    }
-
-    if (setup_mount_namespace() != kOK) {
-        errExit("mount ns");
-    }
-
-    if (setup_net_namespace() != kOK) {
-        errExit("net ns");
-    }
+//    if (setup_user_namespace() != kOK) {
+//        errExit("user ns");
+//    }
+//
+//    if (setup_mount_namespace() != kOK) {
+//        errExit("mount ns");
+//    }
+//
+//    if (setup_net_namespace() != kOK) {
+//        errExit("net ns");
+//    }
 
     if (cgroup_create() != kOK) {
         errExit("cgroup create");
