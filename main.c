@@ -47,18 +47,20 @@ int main(int argc, char *argv[]) {
     // Fork to get PID 1 for child
     pid_t pid = fork();
     if (pid == -1) {
+        puts("failed to fork main");
         errExit("fork");
     }
 
     if (pid == 0) {
-        /* child – exec the untrusted binary */
         execv(argv[1], &argv[1]);
+        puts("failed to execute binary");
         errExit("execv");
     }
 
-    /* parent – wait for child */
+    // Wait for child
     int st;
     if (waitpid(pid, &st, 0) == -1) {
+        puts("failed to wait for child to exit (it DNE or died)");
         errExit("waitpid");
     }
 
@@ -74,7 +76,7 @@ int main(int argc, char *argv[]) {
     char path[256];
     snprintf(path, sizeof(path), "%s/%s", CGROUP_ROOT, CGROUP_NAME);
     rmdir(path);
-    
+
     return kOK;
 }
 

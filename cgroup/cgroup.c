@@ -43,18 +43,20 @@ int cgroup_apply_limits(void) {
     char path[256];
 
     snprintf(path, sizeof(path), "%s/%s/cpu.max", CGROUP_ROOT, CGROUP_NAME);
-
     if (write_file(path, "20000 100000\n") == -1) { // 20% utilization
+        puts("failed to write cpu max utilixation");
         return kERROR;
     }
 
     snprintf(path, sizeof(path), "%s/%s/memory.max", CGROUP_ROOT, CGROUP_NAME);
     if (write_file(path, "67108864\n") == -1) { // 64 MB
+        puts("failed to write memory max");
         return kERROR;
     }
 
     snprintf(path, sizeof(path), "%s/%s/io.max", CGROUP_ROOT, CGROUP_NAME);
     if (write_file(path, "rbps=5242880 wbps=5242880\n") == -1) { // 5 MB/s
+        puts("failed to write io max");
         return kERROR;
     }
 

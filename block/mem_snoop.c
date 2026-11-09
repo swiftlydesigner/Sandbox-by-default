@@ -4,6 +4,7 @@ int block_mem_snoop(void) {
     scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_ALLOW);
 
     if (!ctx) {
+        puts("failed to get seccomp context for mem snoop");
         return kERROR;
     }
 
@@ -12,6 +13,7 @@ int block_mem_snoop(void) {
     seccomp_rule_add(ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(process_vm_writev), 0);
 
     if (seccomp_load(ctx)) {
+        puts("failed to get set rules for mem snoop");
         return kERROR;
     }
 

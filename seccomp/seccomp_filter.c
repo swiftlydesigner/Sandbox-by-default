@@ -3,7 +3,9 @@
 int install_seccomp(void) {
 
     scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_KILL);
+
     if (!ctx) {
+        puts("failed to get seccomp context install sec");
         return kERROR;
     }
 
@@ -37,11 +39,13 @@ int install_seccomp(void) {
          (seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(set_tid_address), 0) < 0) |
          (seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(setrlimit), 0) < 0)
         ) {
+            puts("failed at adding seccomp rule");
         return kERROR;
     }
 
-    /* The per‑vector modules will add extra deny rules */
+    // Add rules
     if (seccomp_load(ctx) < 0) {
+        puts("failed to add seccomp rules");
         return kERROR;
     }
 
