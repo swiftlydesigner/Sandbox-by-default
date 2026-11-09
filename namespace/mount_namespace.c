@@ -1,4 +1,4 @@
-#include "sandbox.h"
+#include "../sandbox.h"
 
 int setup_mount_namespace(void) {
     // make current mount tree private

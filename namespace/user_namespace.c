@@ -1,4 +1,4 @@
-#include "sandbox.h"
+#include "../sandbox.h"
 
 int setup_user_namespace(void) {
     FILE *f = fopen("/proc/self/uid_map", "w");

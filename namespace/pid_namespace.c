@@ -1,4 +1,4 @@
-#include "sandbox.h"
+#include "../sandbox.h"
 
 int setup_pid_namespace(void) {
     // Nothing required

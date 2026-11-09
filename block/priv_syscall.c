@@ -1,4 +1,4 @@
-#include "sandbox.h"
+#include "../sandbox.h"
 
 int block_priv_syscalls(void) {
     scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_ALLOW);

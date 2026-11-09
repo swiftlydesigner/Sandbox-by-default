@@ -1,4 +1,4 @@
-#include "sandbox.h"
+#include "../sandbox.h"
 
 // Write to group file
 static int write_file(const char *path, const char *fmt, ...) {
