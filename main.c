@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
     block_net_traffic(); // Harden net_ns [unused]
     block_mem_snoop(); // Harden seccomp with memory snooping
     block_res_exhaust(); // Harden resource exhaustion rules [unused]
-    block_priv_syscalls(); // Harden seccomp with priv sys calls
+//    block_priv_syscalls(); // Harden seccomp with priv sys calls
 
     f = fopen("/proc/self/status","r");
     while (fgets(line,sizeof(line),f)) {
