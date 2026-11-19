@@ -12,12 +12,13 @@ This project is made to sandbox program when they first run, by default. Until a
 
 ## Project Structure
 **root**
-- DEMO.md - Explains demo w/ video
+- DEMO.md - Explains expected output w/ real output
 - install.zsh - install required components
 - main.c - Program entry
 - Makefile - Make configuration
   - Uses `D_FORTIFY_SOURCE=2` to better detect flaws (buffer overflow, insecure string use) in the source code.
 - README.md - Explination of project
+- run.zsh - Run the program and ensure all reqs are matched. (Warning: May change settings with sudo, installs pkgs.)
 - sandbox.h - Protocol Stubs
 
 **assets - Assets to be used in MD files**
@@ -62,8 +63,9 @@ Simply run make as shown below. It will compile the program and run install proc
 ```bash
 make clean && make && ./sandbox
 ```
-
+Alternative, run `./run.zsh
 > [!NOTE] Upon make, a script will run requring root privlages. This will grant proper capabilites to the sandbox to ensure it can control the UUT. 
+
 To run the program, you simply need to add a path to the untrusted exectable
 ```bash
 ./sandbox program_under_test
