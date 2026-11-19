@@ -15,4 +15,4 @@ Errors found:
 - Some functions not structured as desired
 
 Notes:
-- malicious/harness.c was provided w/o prompt. May use, but no immediate plans.
+- malicious/harness.c was provided w/o prompt. Will use for testing simplicity

@@ -39,7 +39,8 @@ if REBOOT; then
 	exit -1;
 fi
 
-make clean && make && ./sandbox 
+make clean && make
+rm escape_fs mal_net exh_cpu exh_mem set_uid snoop
 
 if TEST; then
     gcc malicious/esc_fs.c -o escape_fs
@@ -48,4 +49,7 @@ if TEST; then
     gcc malicious/exhaust_mem.c -o exh_mem
     gcc malicious/set_uid_root.c -o set_uid
     gcc malicious/snoop_mem.c -o snoop
+    gcc malicious/harness.c -o sandbox_test
+
+    ./sandbox_test ./sandbox
 fi
