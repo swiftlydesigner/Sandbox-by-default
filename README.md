@@ -18,7 +18,7 @@ This project is made to sandbox program when they first run, by default. Until a
 - Makefile - Make configuration
   - Uses `D_FORTIFY_SOURCE=2` to better detect flaws (buffer overflow, insecure string use) in the source code.
 - README.md - Explination of project
-- run.zsh - Run the program and ensure all reqs are matched. (Warning: May change settings with sudo, installs pkgs.)
+- run.sh - Run the program and ensure all reqs are matched. (Warning: May change settings with sudo, installs pkgs.)
 - sandbox.h - Protocol Stubs
 
 **assets - Assets to be used in MD files**

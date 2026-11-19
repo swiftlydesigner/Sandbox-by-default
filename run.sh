@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 REBOOT=false
 
@@ -23,7 +23,7 @@ else
 	REBOOT=true
 fi
 
-if $(stat -fc %T /sys/fs/cgroup) != "cgroup2fs"; then
+if $(stat -fc %T /sys/fs/cgroup) != 'cgroup2fs'; then
 	sudo sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT="/ s/"$/ systemd.unified_cgroup_hierarchy=1 cgroup_no_v1=all"/' /etc/default/grub
     sudo update-grub
     sudo reboot
@@ -34,7 +34,7 @@ if REBOOT; then
 	echo "System must reboot. Scheduled for 10 sec. CTRL-C TO ABORT REBOOT!!"
 	sleep 10
 	sudo reboot
-	exit(-1);
+	exit -1;
 fi
 
 make clean && make && ./sandbox
