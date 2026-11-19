@@ -23,12 +23,12 @@ struct test {
 };
 
 static const struct test tests[] = {
-    {"snoop_mem",    "./snoop_mem",    "read host memory (/dev/mem, /dev/kmem, /proc/kcore, /proc/1/mem)", 1},
-    {"esc_fs",       "./esc_fs",       "escape the sandboxed filesystem and read host files",              1},
-    {"set_uid_root", "./set_uid_root", "change uid/gid to root",                                           1},
-    {"exhaust_cpu",  "./exhaust_cpu",  "fork bomb",                                                        1},
-    {"exhaust_mem",  "./exhaust_mem",  "allocate memory until out of memory",                              1},
-    {"networking",   "./networking",   "reach the outside world (TCP, UDP DNS, name resolution)",          0},
+    {"snoop_mem", "./snoop", "read host memory (/dev/mem, /dev/kmem, /proc/kcore, /proc/1/mem)", 1},
+    {"esc_fs",  "./escape_fs", "escape the sandboxed filesystem and read host files", 1},
+    {"set_uid_root", "./set_uid", "change uid/gid to root",                                           1},
+    {"exhaust_cpu", "./exh_cpu", "fork bomb", 1},
+    {"exhaust_mem", "./exh_mem", "allocate memory until out of memory", 1},
+    {"networking", "./mal_net", "reach the outside world (TCP, UDP DNS, name resolution)", 0},
 };
 #define NTESTS (sizeof tests / sizeof tests[0])
 
