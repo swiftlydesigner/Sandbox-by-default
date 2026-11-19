@@ -17,13 +17,6 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-//    uid_t orig_uid = getuid();
-//    gid_t orig_gid = getgid();
-
-//    if (setuid(0) != 0) {
-//        errExit("setuid");
-//    }
-
     // Unshare namesapces
     if (unshare_ns() != kOK) {
         errExit("unshare");
@@ -52,15 +45,6 @@ int main(int argc, char *argv[]) {
 //    if (install_seccomp() != kOK) {
 //        errExit("seccomp");
 //    }
-
-    f = fopen("/proc/self/status","r");
-    while (fgets(line,sizeof(line),f)) {
-        if (strncmp(line,"CapEff:",7)==0) {
-            printf("%s",line);
-            break;
-        }
-    }
-    fclose(f);
 
     // Fork to get PID 1 for child
     pid_t pid = fork();
@@ -101,8 +85,6 @@ int main(int argc, char *argv[]) {
     char path[256];
     snprintf(path, sizeof(path), "%s/%s", CGROUP_ROOT, CGROUP_NAME);
     rmdir(path);
-
-//    setuid(orig_uid);
 
     return kOK;
 }
