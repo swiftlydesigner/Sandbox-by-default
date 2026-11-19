@@ -60,6 +60,15 @@ int main(int argc, char *argv[]) {
     block_res_exhaust(); // Harden resource exhaustion rules [unused]
     block_priv_syscalls(); // Harden seccomp with priv sys calls
 
+    FILE *f = fopen("/proc/self/status","r");
+    while (fgets(line,sizeof(line),f)) {
+        if (strncmp(line,"CapEff:",7)==0) {
+            printf("%s",line);
+            break;
+        }
+    }
+    fclose(f);
+
     // Fork to get PID 1 for child
     pid_t pid = fork();
     if (pid == -1) {
