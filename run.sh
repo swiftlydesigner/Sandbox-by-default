@@ -2,7 +2,7 @@
 
 REBOOT=false
 
-TEST=true
+TEST_MODE=1
 
 if dpkg -s libseccomp-dev >/dev/null 2>&1; then
 	echo 'libseccomp-dev installed.'
@@ -32,7 +32,7 @@ if $(stat -fc %T /sys/fs/cgroup) != 'cgroup2fs'; then
 	REBOOT=true
 fi
 
-if REBOOT; then
+if [[ REBOOT ]]; then
 	echo "System must reboot. Scheduled for 10 sec. CTRL-C TO ABORT REBOOT!!"
 	sleep 10
 	sudo reboot
@@ -42,7 +42,7 @@ fi
 make clean && make
 rm escape_fs mal_net exh_cpu exh_mem set_uid snoop
 
-if TEST; then
+if [[ TEST_MODE -eq 1 ]]; then
     gcc malicious/esc_fs.c -o escape_fs
     gcc malicious/networking.c -o mal_net
     gcc malicious/exhaust_cpu.c -o exh_cpu
