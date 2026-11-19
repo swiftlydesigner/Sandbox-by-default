@@ -41,17 +41,17 @@ int main(int argc, char *argv[]) {
         errExit("net ns");
     }
 
-    if (cgroup_create() != kOK) {
-        errExit("cgroup create");
-    }
+//    if (cgroup_create() != kOK) {
+//        errExit("cgroup create");
+//    }
 
-    if (cgroup_apply_limits() != kOK) {
-        errExit("cgroup limits");
-    }
+//    if (cgroup_apply_limits() != kOK) {
+//        errExit("cgroup limits");
+//    }
 
-    if (install_seccomp() != kOK) {
-        errExit("seccomp");
-    }
+//    if (install_seccomp() != kOK) {
+//        errExit("seccomp");
+//    }
 
     // Harden rules
     block_fs_escape(); // Harden mount_ns [unused]
