@@ -3,21 +3,21 @@
 REBOOT=false
 
 if dpkg -s libseccomp-dev >/dev/null 2>&1; then
-	echo "libseccomp-dev installed."
+	echo 'libseccomp-dev installed.'
 else
 	sudo apt install libseccomp-dev -y
 	REBOOT=true
 fi
 
 if dpkg -s gcc >/dev/null 2>&1; then
-	echo "gcc installed."
+	echo 'gcc installed.'
 else
 	sudo apt install gcc -y
 	REBOOT=true
 fi
 
 if dpkg -s make > /dev/null 2>&1; then
-	echo "make installed."
+	echo 'make installed.'
 else
 	sudo apt install make -y
 	REBOOT=true
