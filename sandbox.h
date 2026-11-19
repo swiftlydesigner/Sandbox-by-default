@@ -39,6 +39,7 @@ int block_mem_snoop(void); /* seccomp rule add */
 int block_res_exhaust(void); /* cgroup limits */
 int block_priv_syscalls(void); /* seccomp rule add */
 
+int unshare_ns(void);
 
 void errExit(const char*);
 

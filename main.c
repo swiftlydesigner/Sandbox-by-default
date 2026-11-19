@@ -17,11 +17,15 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    setuid(0);
+    uid_t orig_uid = getuid();
+    gid_t orig_gid = getgid();
+
+    if (setuid(0) != 0) {
+        errExit("setuid");
+    }
 
     // Unshare namesapces
-    if (unshare(CLONE_NEWUSER | CLONE_NEWNS | CLONE_NEWPID |
-                CLONE_NEWNET | CLONE_NEWUTS) == -1) {
+    if (unshare_ns() != kOK) {
         errExit("unshare");
     }
 
@@ -55,6 +59,8 @@ int main(int argc, char *argv[]) {
     block_mem_snoop(); // Harden seccomp with memory snooping
     block_res_exhaust(); // Harden resource exhaustion rules [unused]
     block_priv_syscalls(); // Harden seccomp with priv sys calls
+
+    setuid(orig_uid);
 
     // Fork to get PID 1 for child
     pid_t pid = fork();

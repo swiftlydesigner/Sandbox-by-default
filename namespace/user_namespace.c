@@ -18,13 +18,6 @@ static int write_file(const char *path, const char *text) {
 
 int setup_user_namespace(void) {
     char map[64];
-    uid_t uid = getuid();
-    gid_t gid = getgid();
-
-    if (unshare(CLONE_NEWUSER) == -1) {
-        perror("unshare(CLONE_NEWUSER)");
-        return kERROR;
-    }
 
     if (access("/proc/self/setgroups", F_OK) == 0) {
         if (write_file("/proc/self/setgroups", "deny\n") == -1) {
