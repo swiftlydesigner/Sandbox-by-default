@@ -17,6 +17,8 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    setuid(0);
+
     // Unshare namesapces
     if (unshare(CLONE_NEWUSER | CLONE_NEWNS | CLONE_NEWPID |
                 CLONE_NEWNET | CLONE_NEWUTS) == -1) {
