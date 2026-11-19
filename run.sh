@@ -2,6 +2,8 @@
 
 REBOOT=false
 
+TEST=true
+
 if dpkg -s libseccomp-dev >/dev/null 2>&1; then
 	echo 'libseccomp-dev installed.'
 else
@@ -37,4 +39,13 @@ if REBOOT; then
 	exit -1;
 fi
 
-make clean && make && ./sandbox
+make clean && make && ./sandbox 
+
+if TEST; then
+    gcc malicious/esc_fs.c -o escape_fs
+    gcc malicious/networking.c -o mal_net
+    gcc malicious/exhaust_cpu.c -o exh_cpu
+    gcc malicious/exhaust_mem.c -o exh_mem
+    gcc malicious/set_uid_root.c -o set_uid
+    gcc malicious/snoop_mem.c -o snoop
+fi
