@@ -17,12 +17,12 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    uid_t orig_uid = getuid();
-    gid_t orig_gid = getgid();
+//    uid_t orig_uid = getuid();
+//    gid_t orig_gid = getgid();
 
-    if (setuid(0) != 0) {
-        errExit("setuid");
-    }
+//    if (setuid(0) != 0) {
+//        errExit("setuid");
+//    }
 
     // Unshare namesapces
     if (unshare_ns() != kOK) {
@@ -53,13 +53,6 @@ int main(int argc, char *argv[]) {
 //        errExit("seccomp");
 //    }
 
-    // Harden rules
-    block_fs_escape(); // Harden mount_ns [unused]
-    block_net_traffic(); // Harden net_ns [unused]
-    block_mem_snoop(); // Harden seccomp with memory snooping
-    block_res_exhaust(); // Harden resource exhaustion rules [unused]
-//    block_priv_syscalls(); // Harden seccomp with priv sys calls
-
     f = fopen("/proc/self/status","r");
     while (fgets(line,sizeof(line),f)) {
         if (strncmp(line,"CapEff:",7)==0) {
@@ -75,6 +68,13 @@ int main(int argc, char *argv[]) {
         puts("failed to fork main");
         errExit("fork");
     }
+
+    // Harden rules
+    block_fs_escape(); // Harden mount_ns [unused]
+    block_net_traffic(); // Harden net_ns [unused]
+    block_mem_snoop(); // Harden seccomp with memory snooping
+    block_res_exhaust(); // Harden resource exhaustion rules [unused]
+    block_priv_syscalls(); // Harden seccomp with priv sys calls
 
     if (pid == 0) {
         execv(argv[1], &argv[1]);
@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
     snprintf(path, sizeof(path), "%s/%s", CGROUP_ROOT, CGROUP_NAME);
     rmdir(path);
 
-    setuid(orig_uid);
+//    setuid(orig_uid);
 
     return kOK;
 }

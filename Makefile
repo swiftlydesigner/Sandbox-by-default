@@ -15,7 +15,7 @@ OBJ = $(SRC:.c=.o)
 
 sandbox: $(OBJ)
 	     $(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-		 sudo setcap cap_setuid,cap_setgid+ep ./sandbox
+		 sudo setcap cap_sys_admin+ep ./sandbox
 
 clean:
 	rm -f $(OBJ) sandbox
