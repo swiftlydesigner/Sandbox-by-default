@@ -1,7 +1,7 @@
 #include "sandbox.h"
 
 int main(int argc, char *argv[]) {
-
+/* TO BE DELETED
     FILE *f = fopen("/proc/self/status","r");
     char line[256];
     while (fgets(line,sizeof(line),f)) {
@@ -11,6 +11,7 @@ int main(int argc, char *argv[]) {
         }
     }
     fclose(f);
+ */
 
     if (argc < 2) {
         fprintf(stderr, "Usage: %s /path/to/untrusted [args…]\n", argv[0]);

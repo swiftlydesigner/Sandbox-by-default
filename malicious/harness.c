@@ -127,11 +127,11 @@ static enum verdict run_test(const struct test *t, int argc, char **argv,
     } else {
         if (WIFEXITED(status)) {
             int code = WEXITSTATUS(status);
-            if (code == 0) {
+            if (code == 2) {
                 snprintf(detail, len, "connection to the outside world succeeded");
                 return FAIL;
             }
-            if (code == 2) {
+            if (code == 0) {
                 snprintf(detail, len, "all outbound attempts denied; process survived as expected");
                 return PASS;
             }
