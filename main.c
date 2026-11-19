@@ -60,8 +60,6 @@ int main(int argc, char *argv[]) {
     block_res_exhaust(); // Harden resource exhaustion rules [unused]
     block_priv_syscalls(); // Harden seccomp with priv sys calls
 
-    setuid(orig_uid);
-
     // Fork to get PID 1 for child
     pid_t pid = fork();
     if (pid == -1) {
@@ -94,6 +92,8 @@ int main(int argc, char *argv[]) {
     char path[256];
     snprintf(path, sizeof(path), "%s/%s", CGROUP_ROOT, CGROUP_NAME);
     rmdir(path);
+
+    setuid(orig_uid);
 
     return kOK;
 }
