@@ -16,6 +16,7 @@ This project is made to sandbox program when they first run, by default. Until a
 - install.zsh - install required components
 - main.c - Program entry
 - Makefile - Make configuration
+  - Uses `D_FORTIFY_SOURCE=2` to better detect flaws (buffer overflow, insecure string use) in the source code.
 - README.md - Explination of project
 - sandbox.h - Protocol Stubs
 
