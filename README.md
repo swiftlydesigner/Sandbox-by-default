@@ -19,6 +19,7 @@ This project is made to sandbox program when they first run, by default. Until a
   - Uses `D_FORTIFY_SOURCE=2` to better detect flaws (buffer overflow, insecure string use) in the source code.
 - README.md - Explination of project
 - run.sh - Run the program and ensure all reqs are matched. (Warning: May change settings with sudo, installs pkgs.)
+  - Will also run tests
 - sandbox.h - Protocol Stubs
 
 **assets - Assets to be used in MD files**

@@ -23,9 +23,9 @@ int main(int argc, char *argv[]) {
         errExit("unshare");
     }
 
-//    if (setup_user_namespace() != kOK) {
-//        errExit("user ns");
-//    }
+    if (setup_user_namespace() != kOK) {
+        errExit("user ns");
+    }
 //
 //    if (setup_mount_namespace() != kOK) {
 //        errExit("mount ns");

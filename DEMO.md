@@ -12,3 +12,7 @@ There is no need to reset between sessions as each sandbox enviorment is unique.
 | exhaust_mem.c | exh_mem | Program should be killed | ACT | IN-PROGRESS |
 | set_uid_root.c | set_uid | Program should be killed | ACT | IN-PROGRESS |
 | snoop_mem.c | snoop | Program should be killed | ACT | IN-PROGRESS |
+
+## Running a local demo
+- Download Ubuntu 20.04, upto 22.04. 26.xx is know to have issues with cgroups
+- clone project and run `bash run.sh` wait for code to compile and results will be printed on display
