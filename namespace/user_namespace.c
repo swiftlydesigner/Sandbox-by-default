@@ -19,14 +19,6 @@ static int write_file(const char *path, const char *text) {
 int setup_user_namespace(void) {
     char map[64];
 
-    uid_t uid = getuid();
-    uid_t gid = getgid();
-
-    if (setuid(0) != 0 || setgid(0) != 0) {
-        perror("uid/gid failed to set");
-        return kERROR;
-    }
-
     FILE *f = fopen("/proc/self/status","r");
     char line[256];
     while (fgets(line,sizeof(line),f)) {
@@ -55,9 +47,6 @@ int setup_user_namespace(void) {
         perror("write gid_map");
         return kERROR;
     }
-
-    setuid(uid);
-    setgid(gid);
-
+    
     return kOK;
 }

@@ -18,6 +18,14 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    uid_t uid = getuid();
+    uid_t gid = getgid();
+
+    if (setuid(0) != 0 || setgid(0) != 0) {
+        perror("uid/gid failed to set");
+        return kERROR;
+    }
+
     if (setup_user_namespace() != kOK) {
         errExit("user ns");
     }
@@ -60,6 +68,9 @@ int main(int argc, char *argv[]) {
     block_mem_snoop(); // Harden seccomp with memory snooping
     block_res_exhaust(); // Harden resource exhaustion rules [unused]
     block_priv_syscalls(); // Harden seccomp with priv sys calls
+
+    setuid(uid);
+    setgid(gid);
 
     if (pid == 0) {
         execv(argv[1], &argv[1]);
