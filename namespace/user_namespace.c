@@ -27,6 +27,16 @@ int setup_user_namespace(void) {
         return kERROR;
     }
 
+    FILE *f = fopen("/proc/self/status","r");
+    char line[256];
+    while (fgets(line,sizeof(line),f)) {
+        if (strncmp(line,"CapEff:",7)==0) {
+            printf("%s",line);
+            break;
+        }
+    }
+    fclose(f);
+
     if (access("/proc/self/setgroups", F_OK) == 0) {
         if (write_file("/proc/self/setgroups", "deny\n") == -1) {
             perror("write setgroups");
