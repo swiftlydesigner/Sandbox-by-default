@@ -18,34 +18,34 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    if (setup_user_namespace() != kOK) {
+        errExit("user ns");
+    }
+
+    if (setup_mount_namespace() != kOK) {
+        errExit("mount ns");
+    }
+
+    if (setup_net_namespace() != kOK) {
+        errExit("net ns");
+    }
+
+    if (cgroup_create() != kOK) {
+        errExit("cgroup create");
+    }
+
+    if (cgroup_apply_limits() != kOK) {
+        errExit("cgroup limits");
+    }
+
+    if (install_seccomp() != kOK) {
+        errExit("seccomp");
+    }
+
     // Unshare namesapces
     if (unshare_ns() != kOK) {
         errExit("unshare");
     }
-
-    if (setup_user_namespace() != kOK) {
-        errExit("user ns");
-    }
-//
-//    if (setup_mount_namespace() != kOK) {
-//        errExit("mount ns");
-//    }
-//
-//    if (setup_net_namespace() != kOK) {
-//        errExit("net ns");
-//    }
-
-//    if (cgroup_create() != kOK) {
-//        errExit("cgroup create");
-//    }
-
-//    if (cgroup_apply_limits() != kOK) {
-//        errExit("cgroup limits");
-//    }
-
-//    if (install_seccomp() != kOK) {
-//        errExit("seccomp");
-//    }
 
     // Fork to get PID 1 for child
     pid_t pid = fork();
