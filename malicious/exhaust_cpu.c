@@ -24,7 +24,7 @@ int main(void)
         perror("mmap");
         return 1;
     }
-    pid_t root = getpid();
+//    pid_t root = getpid();
 
     for (;;) {
         if (__atomic_add_fetch(&s->count, 1, __ATOMIC_SEQ_CST) > MAX_FORKS) {
@@ -41,8 +41,8 @@ int main(void)
     while (wait(NULL) > 0)
         ;                   /* reap our children */
 
-    if (getpid() != root)
-        _exit(0);           /* descendants exit quietly; root reports */
+//    if (getpid() != root)
+//        _exit(0);           /* descendants exit quietly; root reports */
 
     if (__atomic_load_n(&s->hit_cap, __ATOMIC_SEQ_CST)) {
         fprintf(stderr, "BREACH: %ld forks without being stopped\n", MAX_FORKS);
