@@ -16,3 +16,8 @@ There is no need to reset between sessions as each sandbox enviorment is unique.
 ## Running a local demo
 - Download Ubuntu 20.04, upto 22.04. 26.xx is know to have issues with cgroups
 - clone project and run `bash run.sh` wait for code to compile and results will be printed on display
+
+## Findings/current standing (lower = more updated)
+- Networking works on own with other setup code commented out
+- user namespace config is not having sufficent premissions. Fails at `write_file("/proc/self/setgroups", "deny\n") == -1` in `namespace/user_namespace.c`
+- 

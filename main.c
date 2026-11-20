@@ -18,41 +18,41 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    uid_t uid = getuid();
-    uid_t gid = getgid();
-
-    if (setuid(0) != 0 || setgid(0) != 0) {
-        perror("uid/gid failed to set");
-        return kERROR;
-    }
-
-    if (setup_user_namespace() != kOK) {
-        errExit("user ns");
-    }
-
-    if (setup_mount_namespace() != kOK) {
-        errExit("mount ns");
-    }
-
-    if (setup_net_namespace() != kOK) {
-        errExit("net ns");
-    }
-
-    if (cgroup_create() != kOK) {
-        errExit("cgroup create");
-    }
-
-    if (cgroup_apply_limits() != kOK) {
-        errExit("cgroup limits");
-    }
-
-    if (install_seccomp() != kOK) {
-        errExit("seccomp");
-    }
+//    uid_t uid = getuid();
+//    uid_t gid = getgid();
+//
+//    if (setuid(0) != 0 || setgid(0) != 0) {
+//        perror("uid/gid failed to set");
+//        return kERROR;
+//    }
 
     // Unshare namesapces
     if (unshare_ns() != kOK) {
         errExit("unshare");
+    }
+
+//    if (setup_user_namespace() != kOK) {
+//        errExit("user ns");
+//    }
+//
+//    if (setup_mount_namespace() != kOK) {
+//        errExit("mount ns");
+//    }
+//
+//    if (setup_net_namespace() != kOK) {
+//        errExit("net ns");
+//    }
+//
+//    if (cgroup_create() != kOK) {
+//        errExit("cgroup create");
+//    }
+//
+//    if (cgroup_apply_limits() != kOK) {
+//        errExit("cgroup limits");
+//    }
+//
+    if (install_seccomp() != kOK) {
+        errExit("seccomp");
     }
 
     // Fork to get PID 1 for child
@@ -69,8 +69,8 @@ int main(int argc, char *argv[]) {
     block_res_exhaust(); // Harden resource exhaustion rules [unused]
     block_priv_syscalls(); // Harden seccomp with priv sys calls
 
-    setuid(uid);
-    setgid(gid);
+//    setuid(uid);
+//    setgid(gid);
 
     if (pid == 0) {
         execv(argv[1], &argv[1]);
